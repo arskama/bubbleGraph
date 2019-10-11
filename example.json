@@ -7,7 +7,11 @@
         {"name": "subset11", "size": 5890},
         {"name": "subset12", "size": 1142},
         {"name": "subset13", "size": 330},
-        {"name": "subset14", "size": 178},
+        {"name": "subset14","children": [
+                {"name": "subset141", "size":10},
+                {"name": "subset142", "size":20}
+            ]
+        },
         {"name": "subset15", "size": 36},
         {"name": "subset16", "size": 30},
         {"name": "subset17", "size": 26}
