@@ -4,9 +4,9 @@
     {
         "name": "Set1",
         "children": [
-        {"name": "subset11", "size": 5890},
-        {"name": "subset12", "size": 1142},
-        {"name": "subset13", "size": 330},
+        {"name": "subset11", "size": 5890, "request" : 2580},
+        {"name": "subset12", "size": 1142, "request": 1142},
+        {"name": "subset13", "size": 330, "request" : "210"},
         {"name": "subset14","children": [
                 {"name": "subset141",
                  "size": 50,
@@ -16,41 +16,41 @@
                  "request": 10}
             ]
         },
-        {"name": "subset15", "size": 36},
-        {"name": "subset16", "size": 30},
-        {"name": "subset17", "size": 26}
+        {"name": "subset15", "size": 36, "request" : 31},
+        {"name": "subset16", "size": 30, "request" : 25},
+        {"name": "subset17", "size": 26, "request" : 4}
         ]
     },
     {
         "name": "Set2",
         "children": [
-        {"name": "subset21", "size": 338},
-        {"name": "subset22", "size": 50},
-        {"name": "subset23", "size": 2}
+        {"name": "subset21", "size": 338, "request" : 110},
+        {"name": "subset22", "size": 50, "request" : 30},
+        {"name": "subset23", "size": 2, "request" : 2}
         ]
     },
     {
         "name": "Set3",
         "children": [
-        {"name": "subset31", "size": 359},
-        {"name": "subset32", "size": 26},
-        {"name": "subset33", "size": 17},
-        {"name": "subset34", "size": 11},
-        {"name": "subset35", "size": 8},
-        {"name": "subset36", "size": 5},
-        {"name": "subset37", "size": 5},
-        {"name": "subset38", "size": 3},
-        {"name": "subset39", "size": 2},
-        {"name": "subset310", "size": 2}
+        {"name": "subset31", "size": 359,  "request" : 260},
+        {"name": "subset32", "size": 26, "request" : 21},
+        {"name": "subset33", "size": 17,  "request" : 10},
+        {"name": "subset34", "size": 11,  "request" : 11},
+        {"name": "subset35", "size": 8,  "request" : 4},
+        {"name": "subset36", "size": 5,  "request" : 4},
+        {"name": "subset37", "size": 5,  "request" : 2},
+        {"name": "subset38", "size": 3,  "request" : 1},
+        {"name": "subset39", "size": 2,  "request" : 0},
+        {"name": "subset310", "size": 2,  "request" : 1}
         ]
     },
     {
         "name": "Set4",
         "children": [
-        {"name": "subset41", "size": 1},
-        {"name": "subset42", "size": 1},
-        {"name": "subset43", "size": 1},
-        {"name": "subset44", "size": 1}
+        {"name": "subset41", "size": 1,  "request" : 0},
+        {"name": "subset42", "size": 1,  "request" : 1},
+        {"name": "subset43", "size": 1,  "request" : 0},
+        {"name": "subset44", "size": 1,  "request" : 1}
         ]
     }
  ]

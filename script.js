@@ -48,7 +48,7 @@ function drawBubbleGraph(filename) {
           .attr("class", function(d) { return d.parent ? d.children ? "inner--node" : "inner--leaf" : "inner--root"; })
 
           let innerleaf = g.selectAll(".inner--leaf")
-              .attr("r", function(d) {return d.r / 2;})
+              .attr("r", function(d) {return (d.r * d.data.request / d.value);})
               .style("fill-opacity", 0.2)
               .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
               .style("fill", green);
@@ -96,7 +96,7 @@ function drawBubbleGraph(filename) {
             var k = diameter / v[2]; view = v;
             node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
             circle.attr("r", function(d) { return d.r * k; });
-            innerleaf.attr("r", function(d) { return (d.r /2) * k; });
+            innerleaf.attr("r", function(d) { return (d.r * d.data.request / d.value) * k; });
         }
 
         /* EXPERIMENT */
