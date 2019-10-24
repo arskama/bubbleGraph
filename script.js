@@ -33,20 +33,30 @@ function drawBubbleGraph(filename) {
         var focus = root,
         nodes = pack(root).descendants(),
         view;
-
+        console.log(nodes);
         var circle = g.selectAll("circle")
             .data(nodes)
             .enter().append("circle")
                 .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
                 .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
                 .on("mouseover", function(d) {return d.children ? null : showData(d);})
-                .style("fill", function(d) { console.log("yo"); console.log(d); return d.children ? color(d.depth) : null; })
+                .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+
+          let innercircle = g.selectAll("innercircle")
+          .data(nodes)
+          .enter().append("circle")
+          .attr("class", function(d) { return d.parent ? d.children ? "inner--node" : "inner--leaf" : "inner--root"; })
+
+          let innerleaf = g.selectAll(".inner--leaf")
+              .attr("r", function(d) {return d.r / 2;})
+              .style("fill-opacity", 0.2)
+              .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
+              .style("fill", green);
+
 
 
         console.log("circle");
         console.log( circle);
-        console.log("nnercircle");
-        console.log( innercircle);
 
         var text = g.selectAll("text")
             .data(nodes)
@@ -56,6 +66,7 @@ function drawBubbleGraph(filename) {
                 .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
                 .text(function(d) { return d.data.name + ": " + d.value; });
 
+        var node = g.selectAll("circle,innerleaf,text");
         var node = g.selectAll("circle,text");
 
         svg
@@ -85,6 +96,7 @@ function drawBubbleGraph(filename) {
             var k = diameter / v[2]; view = v;
             node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
             circle.attr("r", function(d) { return d.r * k; });
+            innerleaf.attr("r", function(d) { return (d.r /2) * k; });
         }
 
         /* EXPERIMENT */

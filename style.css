@@ -29,6 +29,7 @@ text-decoration: underline;
 
 
 .label,
+.inner--leaf,
 .node--root {
   pointer-events: none;
 }
