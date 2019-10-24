@@ -1,10 +1,13 @@
 
+
 var svg = d3.select("svg")
    .attr("preserveAspectRatio", "xMinYMin meet")
    .attr("viewBox", "0 0 800 800"),
     margin = 20,
     diameter = +svg.attr("width"),
     g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+var green = d3.color("green");
 
 var color = d3.scaleLinear()
     .domain([-1, 5])
@@ -35,8 +38,15 @@ function drawBubbleGraph(filename) {
             .data(nodes)
             .enter().append("circle")
                 .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-                .style("fill", function(d) { return d.children ? color(d.depth) : null; })
-                .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+                .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
+                .on("mouseover", function(d) {return d.children ? null : showData(d);})
+                .style("fill", function(d) { console.log("yo"); console.log(d); return d.children ? color(d.depth) : null; })
+
+
+        console.log("circle");
+        console.log( circle);
+        console.log("nnercircle");
+        console.log( innercircle);
 
         var text = g.selectAll("text")
             .data(nodes)
@@ -50,7 +60,7 @@ function drawBubbleGraph(filename) {
 
         svg
             .style("background", color(-1))
-            .on("click", function() { zoom(root); });
+            .on("click", function() { zoom(root); })
 
         zoomTo([root.x, root.y, root.r * 2 + margin]);
 
@@ -76,6 +86,48 @@ function drawBubbleGraph(filename) {
             node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
             circle.attr("r", function(d) { return d.r * k; });
         }
+
+        /* EXPERIMENT */
+        let format = d3.format(",d")
+        let current_circle = undefined;
+
+
+        function showData(d) {
+            // cleanup previous selected circle
+            if(current_circle !== undefined){
+                svg.selectAll("#details-popup").remove();
+            }
+            console.log("here I am" + d.data.name);
+
+        // select the circle
+        current_circle = d3.select(this);
+        console.log("here");
+        console.log(current_circle);
+
+        let textblock = svg.selectAll("#details-popup")
+          .data([d])
+          .enter()
+          .append("g")
+          .attr("id", "details-popup")
+          .attr("font-size", 14)
+          .attr("font-family", "sans-serif")
+          .attr("text-anchor", "start")
+          .attr("transform", d => `translate(0, 20)`);
+
+        textblock.append("text")
+          .text("Details:")
+          .attr("font-weight", "bold");
+        textblock.append("text")
+          .text(d => "Name: " + d.data.name)
+          .attr("y", "16");
+        textblock.append("text")
+          .text(d => "size: " + d.value)
+          .attr("y", "32");
+        textblock.append("text")
+          .text(d => "request: " + d.data.request)
+          .attr("y", "48");
+        }
     });
+
 }
 
