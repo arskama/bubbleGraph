@@ -27,7 +27,7 @@ function drawBubbleGraph(filename) {
 
 
         root = d3.hierarchy(root)
-            .sum(function(d) { return d.size; })
+            .sum(function(d) { return d.max; })
             .sort(function(a, b) { return b.value - a.value; });
 
         var focus = root,
@@ -48,7 +48,7 @@ function drawBubbleGraph(filename) {
           .attr("class", function(d) { return d.parent ? d.children ? "inner--node" : "inner--leaf" : "inner--root"; })
 
           let innerleaf = g.selectAll(".inner--leaf")
-              .attr("r", function(d) {return (d.r * d.data.request / d.value);})
+              .attr("r", function(d) {return (d.r * d.data.request / d.data.max);})
               .style("fill-opacity", 0.2)
               .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
               .style("fill", green);
@@ -64,7 +64,7 @@ function drawBubbleGraph(filename) {
                 .attr("class", "label")
                 .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
                 .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-                .text(function(d) { return d.data.name + ": " + d.value; });
+                .text(function(d) { return d.data.max ? (d.data.name + ": " + d.data.max) : (d.data.name + ": " + d.value); });
 
         var node = g.selectAll("circle,innerleaf,text");
         var node = g.selectAll("circle,text");
@@ -96,7 +96,7 @@ function drawBubbleGraph(filename) {
             var k = diameter / v[2]; view = v;
             node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
             circle.attr("r", function(d) { return d.r * k; });
-            innerleaf.attr("r", function(d) { return (d.r * d.data.request / d.value) * k; });
+            innerleaf.attr("r", function(d) { return (d.r * d.data.request / d.data.max) * k; });
         }
 
         /* EXPERIMENT */
@@ -133,10 +133,10 @@ function drawBubbleGraph(filename) {
           .text(d => "Name: " + d.data.name)
           .attr("y", "16");
         textblock.append("text")
-          .text(d => "size: " + d.value)
+          .text(d => "max Request: " + d.data.max)
           .attr("y", "32");
         textblock.append("text")
-          .text(d => "request: " + d.data.request)
+          .text(d => "Request: " + d.data.request)
           .attr("y", "48");
         }
     });
